@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # y = wx + b
 # 均方误差
 # loss = (WX + b - y) ** 2
@@ -11,21 +12,27 @@ def compute_error_for_line_given_points(b, w, points):
         totalError += (y - (w * x + b)) ** 2
     return totalError / float(len(points))
 
+
 # 梯度下降
-# w_new = w_old - lr*
+# w_new = w_old - lr*(▽loss/▽w)
+# loss = (WX + b - y)**2
 def step_gradient(b_current, w_current, points, learningRate):
+    # 初始化b,w
     b_gradient = 0
     w_gradient = 0
     N = float(len(points))
+    # 遍历所有的数据，将所获得的b和w累加求和
     for i in range(0, len(points)):
         x = points[i, 0]
         y = points[i, 1]
-        b_gradient += -(2/N) * (y - ((w_current * x) + b_current))
-        w_gradient += -(2/N) * x * (y - ((w_current * x) + b_current))
+        b_gradient += -(2 / N) * (y - ((w_current * x) + b_current))
+        w_gradient += -(2 / N) * x * (y - ((w_current * x) + b_current))
+    # 根据梯度更新b和w
     new_b = b_current - (learningRate * b_gradient)
     new_m = w_current - (learningRate * w_gradient)
     return [new_b, new_m]
 
+# Iterate to optimize 迭代优化
 def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
     b = starting_b
     m = starting_m
@@ -33,11 +40,12 @@ def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_i
         b, m = step_gradient(b, m, np.array(points), learning_rate)
     return [b, m]
 
+
 def run():
     points = np.genfromtxt("data.csv", delimiter=",")
     learning_rate = 0.0001
-    initial_b = 0 # initial y-intercept guess
-    initial_m = 0 # initial slope guess
+    initial_b = 0  # initial y-intercept guess
+    initial_m = 0  # initial slope guess
     num_iterations = 1000
     print("Starting gradient descent at b = {0}, m = {1}, error = {2}"
           .format(initial_b, initial_m,
@@ -49,6 +57,7 @@ def run():
           format(num_iterations, b, m,
                  compute_error_for_line_given_points(b, m, points))
           )
+
 
 if __name__ == '__main__':
     run()

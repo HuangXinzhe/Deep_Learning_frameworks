@@ -1,5 +1,5 @@
-import  torch
-from    matplotlib import pyplot as plt
+import torch
+from matplotlib import pyplot as plt
 
 
 def plot_curve(data):
@@ -11,14 +11,12 @@ def plot_curve(data):
     plt.show()
 
 
-
 def plot_image(img, label, name):
-
     fig = plt.figure()
     for i in range(6):
         plt.subplot(2, 3, i + 1)
         plt.tight_layout()
-        plt.imshow(img[i][0]*0.3081+0.1307, cmap='gray', interpolation='none')
+        plt.imshow(img[i][0] * 0.3081 + 0.1307, cmap='gray', interpolation='none')
         plt.title("{}: {}".format(name, label[i].item()))
         plt.xticks([])
         plt.yticks([])
