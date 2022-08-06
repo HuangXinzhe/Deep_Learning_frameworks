@@ -1,8 +1,7 @@
-import  numpy as np
-from    mpl_toolkits.mplot3d import Axes3D
-from    matplotlib import pyplot as plt
-import  torch
-
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pyplot as plt
+import torch
 
 
 def himmelblau(x):
@@ -24,7 +23,6 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 plt.show()
 
-
 # [1., 0.], [-4, 0.], [4, 0.]
 x = torch.tensor([-4., 0.], requires_grad=True)
 optimizer = torch.optim.Adam([x], lr=1e-3)
@@ -37,5 +35,5 @@ for step in range(20000):
     optimizer.step()
 
     if step % 2000 == 0:
-        print ('step {}: x = {}, f(x) = {}'
-               .format(step, x.tolist(), pred.item()))
+        print('step {}: x = {}, f(x) = {}'
+              .format(step, x.tolist(), pred.item()))
