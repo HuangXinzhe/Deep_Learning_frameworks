@@ -1,10 +1,11 @@
-import  torch
-from    torch import  nn
-from    torch.nn import functional as F
-from    torch.utils.data import DataLoader
-from    torchvision import datasets
-from    torchvision import transforms
-from    torch import nn, optim
+import torch
+from torch import nn
+from torch.nn import functional as F
+from torch.utils.data import DataLoader
+from torchvision import datasets
+from torchvision import transforms
+from torch import nn, optim
+
 
 # from    torchvision.models import resnet18
 
@@ -33,7 +34,6 @@ class ResBlk(nn.Module):
                 nn.BatchNorm2d(ch_out)
             )
 
-
     def forward(self, x):
         """
         :param x: [b, ch, h, w]
@@ -47,8 +47,6 @@ class ResBlk(nn.Module):
         out = self.extra(x) + out
 
         return out
-
-
 
 
 class ResNet18(nn.Module):
@@ -70,7 +68,7 @@ class ResNet18(nn.Module):
         # # [b, 512, h, w] => [b, 1024, h, w]
         # self.blk4 = ResBlk(256, 512)
 
-        self.outlayer = nn.Linear(32*32*32, 10)
+        self.outlayer = nn.Linear(32 * 32 * 32, 10)
 
     def forward(self, x):
         """
@@ -89,9 +87,7 @@ class ResNet18(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.outlayer(x)
 
-
         return x
-
 
 
 def main():
@@ -108,7 +104,6 @@ def main():
         transforms.ToTensor()
     ]), download=True)
     cifar_test = DataLoader(cifar_test, batch_size=batchsz, shuffle=True)
-
 
     x, label = iter(cifar_train).next()
     print('x:', x.shape, 'label:', label.shape)
@@ -140,10 +135,8 @@ def main():
             loss.backward()
             optimizer.step()
 
-
         #
         print(epoch, 'loss:', loss.item())
-
 
         model.eval()
         with torch.no_grad():
