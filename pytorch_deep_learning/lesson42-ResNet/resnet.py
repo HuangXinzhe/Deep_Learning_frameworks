@@ -7,7 +7,7 @@ from torchvision import transforms
 from torch import nn, optim
 
 
-# from    torchvision.models import resnet18
+# from torchvision.models import resnet18
 
 class ResBlk(nn.Module):
     """

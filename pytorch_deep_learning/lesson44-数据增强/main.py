@@ -1,14 +1,14 @@
-import  torch
-import  torch.nn as nn
-import  torch.nn.functional as F
-import  torch.optim as optim
-from    torchvision import datasets, transforms
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torchvision import datasets, transforms
 
 from visdom import Visdom
 
-batch_size=200
-learning_rate=0.01
-epochs=10
+batch_size = 200
+learning_rate = 0.01
+epochs = 10
 
 train_loader = torch.utils.data.DataLoader(
     datasets.MNIST('../data', train=True, download=True,
@@ -31,7 +31,6 @@ test_loader = torch.utils.data.DataLoader(
     batch_size=batch_size, shuffle=True)
 
 
-
 class MLP(nn.Module):
 
     def __init__(self):
@@ -51,6 +50,7 @@ class MLP(nn.Module):
 
         return x
 
+
 device = torch.device('cuda:0')
 net = MLP().to(device)
 optimizer = optim.SGD(net.parameters(), lr=learning_rate)
@@ -66,7 +66,7 @@ global_step = 0
 for epoch in range(epochs):
 
     for batch_idx, (data, target) in enumerate(train_loader):
-        data = data.view(-1, 28*28)
+        data = data.view(-1, 28 * 28)
         data, target = data.to(device), target.cuda()
 
         logits = net(data)
@@ -84,7 +84,6 @@ for epoch in range(epochs):
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
                        100. * batch_idx / len(train_loader), loss.item()))
-
 
     test_loss = 0
     correct = 0
