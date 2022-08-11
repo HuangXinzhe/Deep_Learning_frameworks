@@ -1,16 +1,15 @@
-import  torch
-from    torch import nn
-from    torch.nn import functional as F
-
-
+import torch
+from torch import nn
+from torch.nn import functional as F
 
 
 class Lenet5(nn.Module):
     """
     for cifar10 dataset.
     """
+
     def __init__(self):
-        super(Lenet5, self).__init__()
+        super(Lenet5, self).__init__()  # 初始化父类
 
         self.conv_unit = nn.Sequential(
             # x: [b, 3, 32, 32] => [b, 16, ]
@@ -24,13 +23,12 @@ class Lenet5(nn.Module):
         # flatten
         # fc unit
         self.fc_unit = nn.Sequential(
-            nn.Linear(32*5*5, 32),
+            nn.Linear(32 * 5 * 5, 32),
             nn.ReLU(),
             # nn.Linear(120, 84),
             # nn.ReLU(),
             nn.Linear(32, 10)
         )
-
 
         # [b, 3, 32, 32]
         tmp = torch.randn(2, 3, 32, 32)
@@ -40,8 +38,6 @@ class Lenet5(nn.Module):
 
         # # use Cross Entropy Loss
         # self.criteon = nn.CrossEntropyLoss()
-
-
 
     def forward(self, x):
         """
@@ -53,7 +49,7 @@ class Lenet5(nn.Module):
         # [b, 3, 32, 32] => [b, 16, 5, 5]
         x = self.conv_unit(x)
         # [b, 16, 5, 5] => [b, 16*5*5]
-        x = x.view(batchsz, 32*5*5)
+        x = x.view(batchsz, 32 * 5 * 5)
         # [b, 16*5*5] => [b, 10]
         logits = self.fc_unit(x)
 
@@ -63,15 +59,13 @@ class Lenet5(nn.Module):
 
         return logits
 
-def main():
 
+def main():
     net = Lenet5()
 
     tmp = torch.randn(2, 3, 32, 32)
     out = net(tmp)
     print('lenet out:', out.shape)
-
-
 
 
 if __name__ == '__main__':
