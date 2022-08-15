@@ -36,8 +36,10 @@ class Lenet5(nn.Module):
         # [b, 16, 5, 5]
         print('conv out:', out.shape)
 
-        # # use Cross Entropy Loss
-        # self.criteon = nn.CrossEntropyLoss()
+        # # use Cross Entropy Loss，其中包含了softmax
+        # loss的计算方法
+        # self.criteon = nn.MSELoss()  # 回归问题
+        # self.criteon = nn.CrossEntropyLoss()  # 分类问题
 
     def forward(self, x):
         """

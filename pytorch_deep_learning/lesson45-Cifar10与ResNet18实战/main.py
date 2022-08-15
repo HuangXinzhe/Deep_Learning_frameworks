@@ -68,7 +68,7 @@ def main():
         print(epoch, 'loss:', loss.item())
 
         model.eval()
-        with torch.no_grad():
+        with torch.no_grad():  # 不需要构建计算图
             # test
             total_correct = 0
             total_num = 0

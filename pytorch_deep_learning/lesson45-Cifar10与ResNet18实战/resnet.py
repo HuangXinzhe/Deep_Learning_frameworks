@@ -1,7 +1,6 @@
-import  torch
-from    torch import  nn
-from    torch.nn import functional as F
-
+import torch
+from torch import nn
+from torch.nn import functional as F
 
 
 class ResBlk(nn.Module):
@@ -31,7 +30,6 @@ class ResBlk(nn.Module):
                 nn.BatchNorm2d(ch_out)
             )
 
-
     def forward(self, x):
         """
 
@@ -45,10 +43,8 @@ class ResBlk(nn.Module):
         # element-wise add:
         out = self.extra(x) + out
         out = F.relu(out)
-        
+
         return out
-
-
 
 
 class ResNet18(nn.Module):
@@ -70,7 +66,7 @@ class ResNet18(nn.Module):
         # # [b, 512, h, w] => [b, 1024, h, w]
         self.blk4 = ResBlk(512, 512, stride=2)
 
-        self.outlayer = nn.Linear(512*1*1, 10)
+        self.outlayer = nn.Linear(512 * 1 * 1, 10)
 
     def forward(self, x):
         """
@@ -86,7 +82,6 @@ class ResNet18(nn.Module):
         x = self.blk3(x)
         x = self.blk4(x)
 
-
         # print('after conv:', x.shape) #[b, 512, 2, 2]
         # [b, 512, h, w] => [b, 512, 1, 1]
         x = F.adaptive_avg_pool2d(x, [1, 1])
@@ -94,13 +89,10 @@ class ResNet18(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.outlayer(x)
 
-
         return x
 
 
-
 def main():
-
     blk = ResBlk(64, 128, stride=4)
     tmp = torch.randn(2, 64, 32, 32)
     out = blk(tmp)
@@ -110,8 +102,6 @@ def main():
     model = ResNet18()
     out = model(x)
     print('resnet:', out.shape)
-
-
 
 
 if __name__ == '__main__':
