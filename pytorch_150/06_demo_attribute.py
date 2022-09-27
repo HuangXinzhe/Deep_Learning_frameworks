@@ -20,4 +20,17 @@ print(a)
 a = torch.sparse_coo_tensor(i, v, (4, 4)).to_dense()
 print(a)
 
+# 定义数据类型和GPU
+a = torch.sparse_coo_tensor(i, v, (4, 4),
+                            dtype=torch.float32,
+                            device=dev).to_dense()
+print(a)
+
+"""
+数据分别放在CPU或GPU上的理由
+CPU：数据分配，数据读取，数据预处理操作
+GPU：参数计算，推理，反向传播
+
+通过对资源的合理分配来实现资源利用率的最大化，使得网络训练迭代更快
+"""
 
